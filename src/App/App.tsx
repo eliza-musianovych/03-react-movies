@@ -7,10 +7,10 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 export default function App() {
 
-    return <>
+    return (<>
     <SearchBar />
     <MovieGrid />
-    </>
     <Loader />
     <ErrorMessage />
+    </>)
 }
