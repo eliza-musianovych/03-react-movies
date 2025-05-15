@@ -7,6 +7,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import MovieModal from '../MovieModal/MovieModal';
 import { fetchMovies } from '../../services/movieService';
 import type { Movie } from '../../types/movie';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function App() {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -19,7 +20,14 @@ export default function App() {
         try {
             setIsLoading(true);
             setIsError(false);
+            setMovies([]);
             const data = await fetchMovies(query);
+
+            if (data.length === 0) {
+                toast(`No movies found for your request.`);
+                return;
+            }
+
             setMovies(data);
         } catch {
             setIsError(true);
@@ -55,5 +63,6 @@ export default function App() {
         onClose={handleClose} 
         />
     )}
+    <Toaster />
     </div>)
 }

@@ -3,7 +3,7 @@ import type { Movie } from "../types/movie";
 
 interface MovieHttpResponse {
     results: Movie[];
-};
+}
 
 const URL = 'https://api.themoviedb.org/3/search/movie';
 

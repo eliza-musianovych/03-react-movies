@@ -1,5 +1,4 @@
 import css from "./SearchBar.module.css";
-import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 
 interface SearchBarProps {
@@ -7,14 +6,8 @@ interface SearchBarProps {
 }
 
 export default function SearchBar ({onSubmit}: SearchBarProps) {
-   const [query, setQuery] = useState<string>('');
-
-   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-   };
-
-   const handleSubmin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+   const handleSubmin = (formData: FormData) => {
+    const query = formData.get("query") as string;
 
     const queryTrimmed = query.trim();
 
@@ -24,7 +17,6 @@ export default function SearchBar ({onSubmit}: SearchBarProps) {
     };
 
     onSubmit(queryTrimmed);
-    setQuery('');
    }
 
     return <header className={css.header}>
@@ -37,7 +29,7 @@ export default function SearchBar ({onSubmit}: SearchBarProps) {
         >
          Powered by TMDB
         </a>
-        <form className={css.form} onSubmit={handleSubmin}>
+        <form className={css.form} action={handleSubmin}>
           <input
             className={css.input}
             type="text"
@@ -45,8 +37,6 @@ export default function SearchBar ({onSubmit}: SearchBarProps) {
             autoComplete="off"
             placeholder="Search movies..."
             autoFocus
-            value={query}
-            onChange={handleChange}
         />
         <button className={css.button} type="submit">
            Search 
